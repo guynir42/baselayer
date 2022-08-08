@@ -1739,16 +1739,16 @@ def join_model(
 
     model_attrs.update(
         {
-            model_1.__name__.lower(): relationship(
-                model_1,
-                cascade="save-update, merge, refresh-expire, expunge",
-                foreign_keys=[model_attrs[column_1]],
-            ),
-            model_2.__name__.lower(): relationship(
-                model_2,
-                cascade="save-update, merge, refresh-expire, expunge",
-                foreign_keys=[model_attrs[column_2]],
-            ),
+            # model_1.__name__.lower(): relationship(
+            #     model_1,
+            #     cascade="save-update, merge, refresh-expire, expunge",
+            #     foreign_keys=[model_attrs[column_1]],
+            # ),
+            # model_2.__name__.lower(): relationship(
+            #     model_2,
+            #     cascade="save-update, merge, refresh-expire, expunge",
+            #     foreign_keys=[model_attrs[column_2]],
+            # ),
             forward_ind_name: sa.Index(
                 forward_ind_name,
                 model_attrs[column_1],
@@ -1786,7 +1786,7 @@ class Role(Base):
     acls = relationship(
         "ACL",
         secondary="role_acls",
-        passive_deletes=True,
+        viewonly=True,
         doc="ACLs associated with the Role.",
         lazy="subquery",
     )
@@ -1861,7 +1861,7 @@ class User(Base):
     acls = relationship(
         "ACL",
         secondary="user_acls",
-        passive_deletes=True,
+        viewonly=True,
         doc="ACLs granted to user, separate from role-level ACLs",
         lazy="selectin",
     )
@@ -1949,7 +1949,7 @@ class Token(Base):
     acls = relationship(
         "ACL",
         secondary="token_acls",
-        passive_deletes=True,
+        viewonly=True,
         doc="The ACLs granted to the Token.",
         lazy="selectin",
     )
